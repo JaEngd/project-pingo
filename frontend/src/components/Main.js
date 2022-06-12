@@ -4,6 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { API_URL } from "utils/utils";
 import thoughts from "reducers/thoughts";
+import GoogleMaps from "components/GoogleMaps"
+
+
 
 const Main = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -42,7 +45,8 @@ const Main = () => {
   return (
     <>
       <Link to="login"> LINK TO /login </Link>
-      <h1>This is Main</h1>
+      <h1>Welcome to PinGo</h1>
+      <GoogleMaps />
       {thoughtItems.map((item) => {
         return <div key={item._id}>{item.message}</div>;
       })}
