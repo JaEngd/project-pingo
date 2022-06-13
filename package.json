@@ -5,6 +5,7 @@
     "postinstall": "npm install --prefix backend"
   },
   "dependencies": {
+    "date-fns": "^2.28.0",
     "dotenv": "^16.0.1"
   }
 }
