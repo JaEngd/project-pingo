@@ -45,13 +45,16 @@ export default function GoogleMaps() {
         mapRef.current = map;
     }, [])
 
+    const panTo = useCallback(({lat, lng}) => {
+        mapRef.current.panTo({lat, lng})
+        mapRef.current.setZoom(14)
+    }, [])
+
     if (!isLoaded) return <div>Loading...</div>;
     return (
 
         <>
-          <Search />
-
-        
+          <Search panTo={panTo} /> 
 
     <GoogleMap //Google maps package
     mapContainerStyle={mapContainerStyle}
@@ -88,7 +91,7 @@ export default function GoogleMaps() {
     ) 
 }
 
-function Search () {
+function Search ({ panTo }) {
 
     const [address,setAddress] = useState("")
     const [coordinates,setCoordinates] = useState({
@@ -98,15 +101,14 @@ function Search () {
 
     const handleSelect = async value => {
         const results = await geocodeByAddress(value)
-        
-        const ll = await getLatLng(results[0])
-        console.log(ll);
+        const {lat ,lng} = await getLatLng(results[0])
+        panTo({lat, lng})
         setAddress(value)
-        setCoordinates(ll)
+        setCoordinates(lat, lng)
     }
 
     return (
-        
+        <div className="search">
         <PlacesAutocomplete
           value={address}
           onChange={setAddress}
@@ -147,7 +149,7 @@ function Search () {
             
           )}
         </PlacesAutocomplete>
-        
+        </div>
       );
     
 }
