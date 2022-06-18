@@ -55,6 +55,7 @@ export default function GoogleMaps() {
 
         <>
           <Search panTo={panTo} /> 
+          <Locate panTo={panTo} />
 
     <GoogleMap //Google maps package
     mapContainerStyle={mapContainerStyle}
@@ -89,6 +90,20 @@ export default function GoogleMaps() {
     </GoogleMap>
     </>
     ) 
+}
+
+function Locate ({panTo}) {
+    return( 
+    <button className="locate" onClick={() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            panTo({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            })
+        }, () => null
+        )
+    }}></button>
+    )
 }
 
 function Search ({ panTo }) {
