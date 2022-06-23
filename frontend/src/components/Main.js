@@ -8,6 +8,7 @@ import GoogleMaps from "components/GoogleMaps"
 
 
 
+
 const Main = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const thoughtItems = useSelector((store) => store.thoughts.items);
@@ -44,8 +45,6 @@ const Main = () => {
 
   return (
     <>
-      <Link to="login"> LINK TO /login </Link>
-      <h1>Welcome to PinGo</h1>
       <GoogleMaps />
       {thoughtItems.map((item) => {
         return <div key={item._id}>{item.message}</div>;

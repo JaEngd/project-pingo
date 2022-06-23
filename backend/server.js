@@ -11,8 +11,6 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-pingo";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
-
-
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -34,6 +32,44 @@ const UserSchema = new mongoose.Schema({
     default: () => crypto.randomBytes(128).toString("hex"),
   },
 });
+
+//PIN SCHEMA
+const PinSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+      min: 3,
+      max: 60,
+    },
+    desc: {
+      type: String,
+      required: true,
+      min: 3,
+    },
+    rating: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 5,
+    },
+    long: {
+      type: Number,
+      required: true,
+    },
+    lat: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const Pin = mongoose.model("Pin", PinSchema);
 
 const User = mongoose.model("User", UserSchema);
 
@@ -143,6 +179,28 @@ const authenticateUser = async (req, res, next) => {
      res.status(400).json({ response: error, success: false });
    }
  });
+
+ //create a pin
+app.post("/api/pin", async (req, res) => {
+  const newPin = new Pin(req.body);
+  try {
+    const savedPin = await newPin.save();
+    res.status(200).json(savedPin);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//get all pins
+app.get("/api/pins", async (req, res) => {
+  try {
+    const pins = await Pin.find();
+    res.status(200).json(pins);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 // Start defining your routes here
 app.get("/", (req, res) => {

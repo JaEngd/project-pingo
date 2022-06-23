@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, batch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
+
 import { API_URL } from "utils/utils";
 import user from "reducers/user";
 
@@ -56,7 +57,7 @@ const Login = () => {
 
   return (
     <>
-      <Link to="/"> LINK TO /</Link>
+    <div className="loginpage">
       <label htmlFor="register">Register</label>
       <input
         type="radio"
@@ -92,6 +93,7 @@ const Login = () => {
 
         <button type="submit">Submit</button>
       </form>
+      </div>
     </>
   );
 };

@@ -11,7 +11,6 @@ import usePlacesAutocomplete, {
 import { geocodeByAddress } from "react-places-autocomplete";
 import PlacesAutocomplete from "react-places-autocomplete";
 
-
 const libraries = ["places"] //Moved it outside to avoid to many renders
 const mapContainerStyle = {
     width: "100vw",
@@ -51,12 +50,13 @@ export default function GoogleMaps() {
     }, [])
 
     if (!isLoaded) return <div>Loading...</div>;
-    return (
+    return (  
 
+      <div>
         <>
           <Search panTo={panTo} /> 
           <Locate panTo={panTo} />
-
+<h1>PinGo{" "} <img className="map-marker" src="map-marker.png" alt="" /></h1>
     <GoogleMap //Google maps package
     mapContainerStyle={mapContainerStyle}
     zoom={10}
@@ -89,6 +89,7 @@ export default function GoogleMaps() {
                 ) : null}
     </GoogleMap>
     </>
+    </div>
     ) 
 }
 
@@ -102,7 +103,9 @@ function Locate ({panTo}) {
             })
         }, () => null
         )
-    }}></button>
+    }}>
+    <img src="compass-icon.png" alt="" />
+    </button>
     )
 }
 
