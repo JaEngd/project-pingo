@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 18px;
+  font-style: bold;
 }
 
 code {
@@ -45,6 +47,12 @@ h1 {
   background-color: rgb(215, 215, 215);
 }
 
+.loginpage input{
+  padding: 0.3rem;
+  border-radius: 20px;
+  background-color: rgb(215, 215, 215);
+}
+
 .locate {
   position: absolute;
   top: 1rem;
@@ -64,6 +72,89 @@ h1 {
 .locate img {
   width: 30px;
   cursor: pointer;
+}
+
+.loginpage {
+    width: 200px;
+    height: 200px;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align:center;
+}
+
+.loginregister{
+  margin: 10px
+}
+
+.loginpage h1{
+  position: relative;
+  margin: 20px;
+}
+
+.loginpage button{
+  background: #00aa2b;
+  color: #fff;
+  padding: 10px 40px;
+  font-style: bold;
+  box-shadow: 6px 6px 39px -4px rgba(0,0,0,0.75);
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 15px;
+  transition: 0.4s;
+}
+
+.content{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 90%;
+  max-width: 500px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  padding-top: 50px;
+}
+
+.loginpage button:hover{
+  background: #34495e;
+  color: #fff;
+}
+
+.loginpage input{
+  margin-bottom: 10px;
+}
+
+form {
+  display:table;/* shrinks to fit content */
+  margin:auto;
+}
+
+.back-video{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -100;
+}
+
+.header{
+  height: 100vh;
+  width: 100%;
+  padding: 0 8%;
+  position: relative;
 }
 
 

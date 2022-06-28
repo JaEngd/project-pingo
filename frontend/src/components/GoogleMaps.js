@@ -1,6 +1,7 @@
-import { GoogleMap, useLoadScript, Marker, useJsApiLoader, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker, useJsApiLoader, InfoWindow, MarkerClusterer } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
+import axios from "axios";
 import { useState, useRef } from "react";
 import { formatRelative } from 'date-fns'
 import Combobox from "react-widgets/Combobox"
@@ -16,7 +17,7 @@ const mapContainerStyle = {
     width: "100vw",
     height: "100vh",
 }
-const center = {lat: 57.72101, lng: 12.9401}
+const center = {lat: 57.72101, lng: 12.9401} //options for the google maps component. To avoid re rendering.
 const options = {
     styles: mapStyles,
     disableDefaultUI: true, //Disable all of the controlls
@@ -29,22 +30,56 @@ export default function GoogleMaps() {
         libraries,
     })
     const [markers, setMarkers] = useState([])
+    const [pins, setPins] = useState([])
     const [selected, setSelected] = useState(null)
+    const [newPlace, setNewPlace] = useState(null)
+    const [title, setTitle] = useState(null)
+    const currentUser = "Jacob"
 
-    const onMapClick = useCallback((event) => {
-        setMarkers(current => [...current, {
-            lat: event.latLng.lat(),
+    const onMapClick = useCallback((event) => { //setMarkers functon
+        setMarkers(current => [...current, { //Recieve the current state and returning a new version of it
+            lat: event.latLng.lat(), //adding a new marker
             lng: event.latLng.lng(),
-            time: new Date (),
+            time: new Date (), //time format
         }])
     }, [])
 
-    const mapRef = useRef();
+    const mapRef = useRef(); //to pan and zoom
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
     }, [])
 
-    const panTo = useCallback(({lat, lng}) => {
+    useEffect(()=>{
+      const getPins = async () => {
+        try{
+          const res = await axios.get("http://localhost:3000")
+          setPins(res.data)
+        }catch(err){
+           console.log(err);
+        }
+      }
+      getPins()
+    }, [])
+
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      const newPin = {
+        username:currentUser,
+        title,
+        lat: newPlace.lat,
+        lng: newPlace.lng
+      }
+      try{
+
+        const res = await axios.post("http://localhost:3000", newPin)
+        setMarkers([...pins, res.data])
+        setNewPlace(null)
+      }catch(err) {
+        console.log(err);
+      }
+    }
+
+    const panTo = useCallback(({lat, lng}) => { //use callback to avoid render triggering
         mapRef.current.panTo({lat, lng})
         mapRef.current.setZoom(14)
     }, [])
@@ -65,9 +100,9 @@ export default function GoogleMaps() {
     onClick={onMapClick}
     onLoad={onMapLoad}
     >
-        {markers.map(marker => 
+        {markers.map(marker => //mapping the markers. For each marker, show the marker component.
         <Marker 
-            key={marker.time.toISOString()} 
+            key={marker.time.toISOString()} //adding a key (time) to make it unique for react
             position={{lat: marker.lat, lng: marker.lng}}
             onClick={() => {
                 setSelected(marker)
@@ -76,14 +111,24 @@ export default function GoogleMaps() {
             )}
             {selected ? (
                 <InfoWindow 
-                position={{ lat: selected.lat, lng: selected.lng }} 
+                position={{ lat: selected.lat, lng: selected.lng }} //object with lat/long
+                latitude={markers.lat}
+                longitude={markers.lng}
                 onCloseClick={() =>{
                     setSelected(null)
                     }}
                     >
-                    <div>
-                        <h2>Hidden gem!</h2>
+                    <div className="card">
+                      <form onSubmit={handleSubmit}>
+                        <input 
+                          placeholder="Enter title" 
+                          onChange={(e)=>setTitle(e.target.value)}/>
+                        <p>{markers.desc}</p>
+                        <span className="username"> 
+                        Created by
+                        <b>{markers.username}</b></span>
                         <p>Created at {formatRelative(selected.time, new Date())}</p>
+                      </form>
                     </div>
                 </InfoWindow>
                 ) : null}
@@ -93,7 +138,7 @@ export default function GoogleMaps() {
     ) 
 }
 
-function Locate ({panTo}) {
+function Locate ({panTo}) { //To get your current position
     return( 
     <button className="locate" onClick={() => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -109,15 +154,14 @@ function Locate ({panTo}) {
     )
 }
 
-function Search ({ panTo }) {
-
+function Search ({ panTo }) { //function search 
     const [address,setAddress] = useState("")
     const [coordinates,setCoordinates] = useState({
-        lat:null,
-        lng:null
+        lat:null, //no value
+        lng:null 
     })
 
-    const handleSelect = async value => {
+    const handleSelect = async value => { //Selecting the city
         const results = await geocodeByAddress(value)
         const {lat ,lng} = await getLatLng(results[0])
         panTo({lat, lng})
@@ -125,7 +169,7 @@ function Search ({ panTo }) {
         setCoordinates(lat, lng)
     }
 
-    return (
+    return ( //search rendering
         <div className="search">
         <PlacesAutocomplete
           value={address}
@@ -136,14 +180,14 @@ function Search ({ panTo }) {
             <div>
               <input
                 {...getInputProps({
-                  placeholder: 'Search Places ...',
+                  placeholder: 'Search Spots ...',
                   className: 'location-search-input',
                 })}
               />
               <div className="autocomplete-dropdown-container">
                 {loading && <div>Loading...</div>}
                 {suggestions.map(suggestion => {
-                  const className = suggestion.active
+                  const className = suggestion.active //ternary operators while scrolling the 
                     ? 'suggestion-item--active'
                     : 'suggestion-item';
                   // inline style for demonstration purpose

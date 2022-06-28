@@ -16,7 +16,6 @@ export default function MapBox() {
       <ReactMapGL 
       {...viewport}
       mapboxAccessToken={process.env.REACT_APP_MAPBOX}
-      
       >markers here</ReactMapGL>
     </div>
   )

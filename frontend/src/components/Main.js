@@ -6,9 +6,6 @@ import { API_URL } from "utils/utils";
 import thoughts from "reducers/thoughts";
 import GoogleMaps from "components/GoogleMaps"
 
-
-
-
 const Main = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const thoughtItems = useSelector((store) => store.thoughts.items);

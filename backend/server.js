@@ -33,6 +33,8 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+const User = mongoose.model("User", UserSchema);
+
 //PIN SCHEMA
 const PinSchema = new mongoose.Schema(
   {
@@ -57,7 +59,7 @@ const PinSchema = new mongoose.Schema(
       min: 0,
       max: 5,
     },
-    long: {
+    lng: {
       type: Number,
       required: true,
     },
@@ -70,8 +72,6 @@ const PinSchema = new mongoose.Schema(
 );
 
 const Pin = mongoose.model("Pin", PinSchema);
-
-const User = mongoose.model("User", UserSchema);
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
@@ -181,7 +181,7 @@ const authenticateUser = async (req, res, next) => {
  });
 
  //create a pin
-app.post("/api/pin", async (req, res) => {
+app.post("/api/pins", async (req, res) => {
   const newPin = new Pin(req.body);
   try {
     const savedPin = await newPin.save();
@@ -199,8 +199,7 @@ app.get("/api/pins", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-});
-
+}); 
 
 // Start defining your routes here
 app.get("/", (req, res) => {

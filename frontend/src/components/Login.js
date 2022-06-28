@@ -57,7 +57,14 @@ const Login = () => {
 
   return (
     <>
+    <header>
+    <video className="back-video" autoPlay muted loop playsInline>
+            <source src="bgvid.mp4" type="video/mp4"/>
+        </video>
+        <section>
+        <h1>PinGo{" "} <img className="map-marker" src="map-marker.png" alt="" /></h1>
     <div className="loginpage">
+    <div className="loginregister">
       <label htmlFor="register">Register</label>
       <input
         type="radio"
@@ -65,7 +72,7 @@ const Login = () => {
         checked={mode === "register"}
         onChange={() => setMode("register")}
       />
-
+      
       <label htmlFor="login">Login</label>
       <input
         type="radio"
@@ -73,6 +80,7 @@ const Login = () => {
         checked={mode === "login"}
         onChange={() => setMode("login")}
       />
+      </div>
 
       <form onSubmit={onFormSubmit}>
         <label htmlFor="username">Username</label>
@@ -94,6 +102,8 @@ const Login = () => {
         <button type="submit">Submit</button>
       </form>
       </div>
+      </section>
+      </header>
     </>
   );
 };
