@@ -1,7 +1,6 @@
 import { GoogleMap, useLoadScript, Marker, useJsApiLoader, InfoWindow, MarkerClusterer } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
 import React, { useCallback, useEffect } from "react";
-import axios from "axios";
 import { useState, useRef } from "react";
 import { formatRelative } from 'date-fns'
 import Combobox from "react-widgets/Combobox"
@@ -50,36 +49,10 @@ export default function GoogleMaps() {
         mapRef.current = map;
     }, [])
 
-    useEffect(()=>{
-      const getPins = async () => {
-        try{
-          const res = await axios.get("http://localhost:3000")
-          setPins(res.data)
-        }catch(err){
-           console.log(err);
-        }
-      }
-      getPins()
-    }, [])
 
 
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-      const newPin = {
-        username: currentUser,
-        title,
-        desc,
-        lat: newPlace.lat,
-        lng: newPlace.lng
-      }
-      try{ 
-        const res = await axios.post("http://localhost:3000", newPin)
-        setMarkers([...markers, res.data])
-        setNewPlace(null)
-      }catch(err) {
-        console.log(err);
-      }
-    }
+
+ 
 
     const panTo = useCallback(({lat, lng}) => { //use callback to avoid render triggering
         mapRef.current.panTo({lat, lng})
@@ -135,7 +108,7 @@ export default function GoogleMaps() {
                         </form>
                     </div>
                 </InfoWindow>
-                ) : null}
+                ) : null} 
     </GoogleMap>
     </>
     </div>
