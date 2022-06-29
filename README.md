@@ -1,8 +1,6 @@
-# Project Auth API
+# Project Pingo
 
-Replace this readme with your own information about your project.
-
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+The idea is that insted of providing all the known spots on google maps, the users starts on a blank page and fills out the map with their hidden spots. For example "My favorite fishing lake" or "The greatest goat farm ever".
 
 ## The problem
 
@@ -10,4 +8,6 @@ Describe how you approached to problem, and what tools and techniques you used t
 
 ## View it live
 
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
+https://project-pingo.netlify.app/
+https://project-pingo.herokuapp.com/
+
