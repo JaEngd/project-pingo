@@ -47,12 +47,7 @@ export default function GoogleMaps() {
     const mapRef = useRef(); //to pan and zoom
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
-    }, [])
-
-
-
-
- 
+    }, []) 
 
     const panTo = useCallback(({lat, lng}) => { //use callback to avoid render triggering
         mapRef.current.panTo({lat, lng})
@@ -95,7 +90,6 @@ export default function GoogleMaps() {
                     }}
                     >
                     <div className="card">
-                    <form onSubmit={handleSubmit} >
                       <h2>Hidden gem!</h2>
                       <input onChange={(e) => setTitle(e.target.value)} />
                       <textarea onChange={(e) => setDesc(e.target.value)} />
@@ -105,7 +99,6 @@ export default function GoogleMaps() {
                         <button className="submitButton" type="submit">
                           Add Hidden Gem!
                         </button>
-                        </form>
                     </div>
                 </InfoWindow>
                 ) : null} 
