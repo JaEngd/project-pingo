@@ -32,6 +32,7 @@ export default function GoogleMaps() {
     const [markers, setMarkers] = useState([])
     const [pins, setPins] = useState([])
     const [selected, setSelected] = useState(null)
+    const [desc, setDesc] = useState(null)
     const [newPlace, setNewPlace] = useState(null)
     const [title, setTitle] = useState(null)
     const currentUser = "Jacob"
@@ -61,18 +62,19 @@ export default function GoogleMaps() {
       getPins()
     }, [])
 
+
     const handleSubmit = async (e) => {
       e.preventDefault()
       const newPin = {
-        username:currentUser,
+        username: currentUser,
         title,
+        desc,
         lat: newPlace.lat,
         lng: newPlace.lng
       }
-      try{
-
+      try{ 
         const res = await axios.post("http://localhost:3000", newPin)
-        setMarkers([...pins, res.data])
+        setMarkers([...markers, res.data])
         setNewPlace(null)
       }catch(err) {
         console.log(err);
@@ -91,44 +93,46 @@ export default function GoogleMaps() {
         <>
           <Search panTo={panTo} /> 
           <Locate panTo={panTo} />
-<h1>PinGo{" "} <img className="map-marker" src="map-marker.png" alt="" /></h1>
+            <h1>PinGo{" "} <img className="map-marker" src="map-marker.png" alt="" /></h1>
+    
     <GoogleMap //Google maps package
     mapContainerStyle={mapContainerStyle}
     zoom={10}
-    center={center}
+    center={center}   
     options={options}
     onClick={onMapClick}
     onLoad={onMapLoad}
     >
-        {markers.map(marker => //mapping the markers. For each marker, show the marker component.
+        
+        {markers.map(marker => ( //mapping the markers. For each marker, show the marker component.
         <Marker 
             key={marker.time.toISOString()} //adding a key (time) to make it unique for react
             position={{lat: marker.lat, lng: marker.lng}}
             onClick={() => {
                 setSelected(marker)
             }} 
-            />
-            )}
+            ></Marker>
+            ))}
             {selected ? (
                 <InfoWindow 
+                key={selected.time.toISOString()}
                 position={{ lat: selected.lat, lng: selected.lng }} //object with lat/long
-                latitude={markers.lat}
-                longitude={markers.lng}
                 onCloseClick={() =>{
                     setSelected(null)
                     }}
                     >
                     <div className="card">
-                      <form onSubmit={handleSubmit}>
-                        <input 
-                          placeholder="Enter title" 
-                          onChange={(e)=>setTitle(e.target.value)}/>
-                        <p>{markers.desc}</p>
+                    <form onSubmit={handleSubmit} >
+                      <h2>Hidden gem!</h2>
+                      <input onChange={(e) => setTitle(e.target.value)} />
+                      <textarea onChange={(e) => setDesc(e.target.value)} />
                         <span className="username"> 
-                        Created by
-                        <b>{markers.username}</b></span>
+                        Created by<b>{currentUser}</b></span>
                         <p>Created at {formatRelative(selected.time, new Date())}</p>
-                      </form>
+                        <button className="submitButton" type="submit">
+                          Add Hidden Gem!
+                        </button>
+                        </form>
                     </div>
                 </InfoWindow>
                 ) : null}
