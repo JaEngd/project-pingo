@@ -1,6 +1,6 @@
 # Project Pingo
 
-The idea is that insted of providing all the known spots on google maps, the users starts on a blank page and fills out the map with their hidden spots. For example "My favorite fishing lake" or "The greatest goat farm ever".
+The idea is that insted of providing all the known spots on google maps, the users starts on a blank page and fills out the map with their own hidden spots. For example "My favorite fishing lake" or "The greatest goat farm ever".
 
 ## The problem
 
