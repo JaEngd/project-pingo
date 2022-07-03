@@ -4,7 +4,12 @@ The idea is that insted of providing all the known spots on google maps, the use
 
 ## The problem
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
+One problem was while creating the search function. I got an error sayng "Warning: Each child in a list should have a unique "key" prop and solved it by adding a key prop inside the returned div:
+
+key={suggestion.placeId}
+  {...getSuggestionItemProps(suggestion, {
+     className,
+     style,
 
 ## View it live
 
