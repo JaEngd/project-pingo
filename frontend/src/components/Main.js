@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { API_URL } from "utils/utils";
 import thoughts from "reducers/thoughts";
 import GoogleMaps from "components/GoogleMaps"
+import MapBox from "./MapBox";
 
 const Main = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -41,12 +42,7 @@ const Main = () => {
   }, []);
 
   return (
-    <>
-      <GoogleMaps />
-      {thoughtItems.map((item) => {
-        return <div key={item._id}>{item.message}</div>;
-      })}
-    </>
+        <MapBox />
   );
 };
 export default Main;
