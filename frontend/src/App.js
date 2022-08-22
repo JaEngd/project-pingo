@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import user from "reducers/user";
 import thoughts from "reducers/thoughts";
+import MapBox from "components/MapBox";
 
 const reducer = combineReducers({
   user: user.reducer,

@@ -42,6 +42,7 @@ const PinSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
     title: {
       type: String,
       required: true,
@@ -53,7 +54,7 @@ const PinSchema = new mongoose.Schema(
       required: true,
       min: 3,
     },
-    lng: {
+    long: {
       type: Number,
       required: true,
     },

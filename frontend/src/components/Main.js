@@ -42,7 +42,7 @@ const Main = () => {
   }, []);
 
   return (
-        <MapBox />
+     <MapBox />
   );
 };
 export default Main;
