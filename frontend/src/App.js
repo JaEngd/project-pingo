@@ -24,6 +24,7 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/api/pins" element={<MapBox />}></Route>
           <Route path="/" element={<Main />}></Route>
           <Route path="/*" element={<NotFound />}></Route>
         </Routes>

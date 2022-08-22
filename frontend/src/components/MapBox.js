@@ -81,7 +81,7 @@ const MapBox = () => {
         {pins.map((p)=> (
           <>
         <Marker
-        key={p._id}
+        
         latitude={57.72101} 
         longitude={12.9401}
         offsetLeft={-20}

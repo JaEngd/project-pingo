@@ -42,7 +42,10 @@ const Main = () => {
   }, []);
 
   return (
+    <>
+    <Link to="login"> LINK TO /login </Link>
      <MapBox />
+     </>
   );
 };
 export default Main;
