@@ -6,7 +6,6 @@ import { format } from "date-fns";
 import user from "reducers/user";
 
 const MapBox = () => {
-
   const [pins, setPins] = useState([]);
   const [currentPlaceId, setCurrentPlaceId] = useState(null)
   const [newPlace, setNewPlace] = useState(null);
@@ -27,8 +26,8 @@ const MapBox = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const newPin = {
-      username: user,
       title,
       desc,
       rating: star,
@@ -77,11 +76,9 @@ const MapBox = () => {
         onClick = {user && handleAddClick}
         transitionDuration="200"
       >
-        
         {pins.map((p)=> (
           <>
-        <Marker
-        
+        <Marker   
         latitude={57.72101} 
         longitude={12.9401}
         offsetLeft={-20}

@@ -9,7 +9,6 @@ import MapBox from "./MapBox";
 
 const Main = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
-  const thoughtItems = useSelector((store) => store.thoughts.items);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
